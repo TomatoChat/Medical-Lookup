@@ -52,6 +52,7 @@ def searchQuery(request: SearchQueryRequest) -> list[Doctor]:
             clinic_name=query.clinic_name,
             address=query.address,
             education=query.education,
+            language=query.language,
         ))
 
     # Fallback 1: profession only
@@ -65,6 +66,7 @@ def searchQuery(request: SearchQueryRequest) -> list[Doctor]:
             clinic_name=query.clinic_name,
             address=query.address,
             education=query.education,
+            language=query.language,
         ))
 
     needle = query.speciality.lower()

@@ -13,3 +13,4 @@ class RankDoctorsArgs(BaseModel):
     clinic_name: str | None = None
     address: str | None = None
     education: str | None = None
+    language: str | None = None

@@ -22,12 +22,8 @@ Default URL: <http://127.0.0.1:8000> — interactive docs at `/docs`.
 | Method | Path              | Description                                              |
 | ------ | ----------------- | -------------------------------------------------------- |
 | POST   | `/ingest-doctors` | Read `data/healthcare_data.json`, geocode every unique `(location, county)` pair via Nominatim, write enriched rows to `data/doctors.json`. |
-| GET    | `/search`         | Fuzzy-rank doctors using any combination of `name`, `speciality`, `location`, `county`, `clinic_name`, `address`, `education`. Requires `limit`. |
-| POST   | `/search-query`   | Natural-language question (e.g. *"Find me 2 cardiologists in Cluj-Napoca"*); an LLM parses it into the same fields as `/search` and runs the ranker, with closest-city fallback when no in-city match exists. |
-
-The `languages` field is present on each doctor record but is **not** exposed
-as a query parameter on `/search` and is **not** extracted by the LLM in
-`/search-query` — filtering by spoken language is not supported.
+| GET    | `/search`         | Fuzzy-rank doctors using any combination of `name`, `speciality`, `location`, `county`, `clinic_name`, `address`, `education`, `language`. Requires `limit`. |
+| POST   | `/search-query`   | Natural-language question (e.g. *"Find me 2 cardiologists in Cluj-Napoca who speak Hungarian"*); an LLM parses it into the same fields as `/search` and runs the ranker, with closest-city fallback when no in-city match exists. |
 
 ## Processing time
 

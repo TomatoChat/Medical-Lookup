@@ -41,3 +41,11 @@ class DoctorSearchQuery(BaseModel):
         default=None,
         description="University / school if mentioned.",
     )
+    language: str | None = Field(
+        default=None,
+        description=(
+            "A single spoken language the doctor should speak if the user "
+            "mentions one (e.g. 'English', 'German', 'Hungarian'). Use the "
+            "English name of the language."
+        ),
+    )

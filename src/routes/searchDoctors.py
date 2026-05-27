@@ -24,6 +24,7 @@ def searchDoctors(
     clinic_name: str | None = None,
     address: str | None = None,
     education: str | None = None,
+    language: str | None = None,
 ) -> list[Doctor]:
     if not DOCTORS_FILE.exists():
         raise HTTPException(
@@ -42,4 +43,5 @@ def searchDoctors(
         clinic_name=clinic_name,
         address=address,
         education=education,
+        language=language,
     ))

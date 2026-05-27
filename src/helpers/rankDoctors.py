@@ -13,6 +13,7 @@ def rankDoctors(args: RankDoctorsArgs) -> list[Doctor]:
         "clinic_name": args.clinic_name,
         "address": args.address,
         "education": args.education,
+        "language": args.language,
     }
     activeFields = {k: v.lower() for k, v in queryFields.items() if v}
 
@@ -27,10 +28,21 @@ def rankDoctors(args: RankDoctorsArgs) -> list[Doctor]:
         for field, query in activeFields.items():
             if field == "name":
                 target = f"{doctor.first_name} {doctor.last_name}".lower()
+                similarities.append(Levenshtein.normalized_similarity(query, target))
+            elif field == "language":
+                # Score against each spoken language separately and take the
+                # best, so a query for "English" matches a doctor whose list
+                # contains it without being diluted by their other languages.
+                if not doctor.languages:
+                    similarities.append(0.0)
+                else:
+                    similarities.append(max(
+                        Levenshtein.normalized_similarity(query, lang.lower())
+                        for lang in doctor.languages
+                    ))
             else:
                 target = str(getattr(doctor, field)).lower()
-
-            similarities.append(Levenshtein.normalized_similarity(query, target))
+                similarities.append(Levenshtein.normalized_similarity(query, target))
 
         scored.append((sum(similarities) / len(similarities), doctor))
 
